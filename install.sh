@@ -216,10 +216,11 @@ sleep 2
 echo -e "\n\e[00;32m#################### Installing unfurl ###########################\e[00m"
 command -v "unfurl" >/dev/null 2>&1
 if [[ ! -d ~/go/bin ]]; then
+        echo "........Unfurl already exists..........."
+        else
         go get -u github.com/tomnomnom/unfurl
         echo "......Unfurl installed successfully......"
-        else
-        echo "........Unfurl already exists..........."
+        
     fi
 sleep 2
 echo -e "\n\e[00;32m#################### Installing ffuf ###########################\e[00m"
