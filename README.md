@@ -1,5 +1,5 @@
 # recon_automation
-
+![view](https://user-images.githubusercontent.com/82051128/114009556-ae259f80-987c-11eb-998c-6eb7765ffa8a.PNG)
 # About:
 I made this simple script for my bug bounty hunting because it saves my time. I run this script in background and then check the target mannually.
 # Installation:
