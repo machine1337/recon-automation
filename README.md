@@ -2,6 +2,12 @@
 ![view](https://user-images.githubusercontent.com/82051128/114009556-ae259f80-987c-11eb-998c-6eb7765ffa8a.PNG)
 # About:
 I made this simple script for my bug bounty hunting because it saves my time. I run this script in background and then check the target mannually.
+# Requirements:
+1)Make Sure go language is installed and set to PATH
+2)or Download the go language from its official website
+3)Open terminal and move to directory where you downloaded go.
+4)Now run tar -c /usr/local -xzf {go .gz folder}
+5)then sudo nano $HOME/.zshrc or $HOME/.bashrc and add export PATH=$PATH:/usr/local/go/bin
 # Installation:
 1)  Simply Clone the repository
 2)  chmod +x install.sh
