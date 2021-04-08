@@ -17,6 +17,7 @@ command -v "assetfinder" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
         echo "Installing assetfinder: "
         go get -u github.com/tomnomnom/assetfinder
+        echo ".............assetfinder successfully installed.............."
         else
         echo "assetfinder already installed"
     fi
@@ -32,6 +33,7 @@ if [[ $? -ne 0 ]]; then
          echo "Installing amass:"
          sudo apt-get install update
          sudo apt-get install amass
+         echo "................Amass successfully installed.............."
          else
          echo "Amass is already installed"
    fi
@@ -46,6 +48,7 @@ if [[ $? -ne 0 ]]; then
          echo "Installing jq:"
          sudo apt-get install update
          sudo apt-get install jq
+         echo ".................jq successfully installed.............."
          else
          echo "jq is already installed"
    fi
@@ -60,32 +63,54 @@ command -v "subfinder" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
          echo "Installing subfinder:"
          GO111MODULE=on go get -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
+         echo "................subfinder successfully installed.............."
          else
          echo "subfinder is already installed"
    fi
 
 }
 subfinder_checking
+sleep 2
+echo -e "\n\e[00;35m#################### Installing Massdns tool ###########################\e[00m"
+massdns_checking(){
+mkdir -p ~/tools
+command -v "massdns" >/dev/null 2>&1
+if [[ $? -ne 0 ]]; then
+         echo "Installing massdns.....\n\n:"
+         cd ~/tools
+         git clone https://github.com/blechschmidt/massdns.git
+         cd massdns
+          make
+          cd bin
+          sudo mv massdns /usr/local/bin
+          echo "............massdns installed successfully............"
+         else
+         echo "massdns is already installed"
+    fi
+
+}
+massdns_checking
+sleep 2
 echo -e "\n\e[00;35m#################### Installing dnsvalidator tool ###########################\e[00m"
 dnsvalidator_installing(){
-mkdir -p ~/tools/dnsvalidator/resolvers
 mkdir -p ~/tools
-cd ~/tools
-command -v "dnsvalidator" >/dev/null 2>&1
-if [[ ! -d ~/tools/dnsvalidator ]]; then
-       git clone  https://github.com/vortexau/dnsvalidator.git
-       cd ~/tools/dnsvalidator
-       sudo python3 setup.py install
-       dnsvalidator -tL https://public-dns.info/nameservers.txt -threads 25 -o ~/tools/dnsvalidator/resolvers.txt
-       cat ~/tools/dnsvalidator/resolvers.txt | tail -n 60 > ~/tools/dnsvalidator/resolvers/resolver.txt
-else
-        printf "dnsvalidator already exist...!\n\n"
-fi
+mkdir -p ~/tools/resolvers
 
+
+command -v "dnsvalidator" >/dev/null 2>&1
+if [[ $? -ne 0 ]]; then
+        cd ~/tools
+       git clone  https://github.com/vortexau/dnsvalidator.git
+       cd dnsvalidator
+       sudo python3 setup.py install
+       dnsvalidator -tL https://public-dns.info/nameservers.txt -threads 25 -o resolvers.txt
+       cat resolvers.txt | tail -n 60 > ~/tools/resolvers/resolver.txt
+       else
+        echo ".......dnsvalidator already exist...!\n\n"
+fi
 
 }
 dnsvalidator_installing
-
 sleep 2
 
 other_tools(){
@@ -93,7 +118,8 @@ echo -e "\n\e[00;36m#################### Installing httpx tool #################
 command -v "httpx" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
          echo "Installing httpx.....\n\n:"
-         GO111MODULE=on go get -v github.com/projectdiscovery/httpx/cmd/httpx
+        go get -v github.com/projectdiscovery/httpx/cmd/httpx
+        echo ".................httpx successfully installed.............."
          else
          echo "httpx is already installed"
    fi
@@ -104,6 +130,7 @@ command -v "httprobe" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
          echo "Installing httprobe.....\n\n:"
          go get -u github.com/tomnomnom/httprobe
+         echo ".............httprobe successfully installed.............."
          else
          echo "httprobe is already installed"
    fi
@@ -111,9 +138,16 @@ if [[ $? -ne 0 ]]; then
 sleep 3
 echo -e "\n\e[00;31m#################### Installing shuffledns tool ###########################\e[00m"
 command -v "shuffledns" >/dev/null 2>&1
-if [[ $? -ne 0 ]]; then
+if [[ ! -d ~/usr/local/bin ]]; then
          echo "Installing shuffledns.....\n\n:"
-         GO111MODULE=on go get -u -v github.com/projectdiscovery/shuffledns/cmd/shuffledns
+        mkdir -p ~/tools
+        cd ~/tools
+        wget https://github.com/projectdiscovery/shuffledns/releases/download/v1.0.4/shuffledns_1.0.4_linux_amd64.tar.gz
+        tar -xvzf shuffledns*.gz
+       
+        sudo mv shuffledns /usr/local/bin
+         rm -R shuffledns*.gz
+        echo "................shuffledns successfully installed.............."
          else
          echo "shuffledns is already installed"
    fi
@@ -156,8 +190,11 @@ command -v "nuclei" >/dev/null 2>&1
 if [[ ! -d ~/tools/nuclei-templates ]]; then
          
         mkdir -p ~/tools
-        go get -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei
-        cd ~/tools/
+        cd ~/tools
+        wget https://github.com/projectdiscovery/nuclei/releases/download/v2.3.4/nuclei_2.3.4_linux_amd64.tar.gz
+        tar -xvzf nuclei*.gz
+        sudo mv nuclei /usr/local/bin
+        rm -R nuclei*.gz
         git clone https://github.com/projectdiscovery/nuclei-templates.git
         if [[ ! -d ~/tools/nuclei-templates ]]; then
         find ~ -name nuclei-templates -print0 | xargs -0 -I '{}' mv "{}" ~/tools
@@ -178,7 +215,7 @@ if [[ $? -ne 0 ]]; then
 sleep 2
 echo -e "\n\e[00;32m#################### Installing unfurl ###########################\e[00m"
 command -v "unfurl" >/dev/null 2>&1
-if [[ $? -ne 0 ]]; then
+if [[ ! -d ~/go/bin ]]; then
         go get -u github.com/tomnomnom/unfurl
         echo "......Unfurl installed successfully......"
         else
@@ -195,23 +232,7 @@ if [[ $? -ne 0 ]]; then
     fi
 }
 other_tools
-sleep 3
-echo -e "\n\e[00;35m#################### Installing Massdns tool ###########################\e[00m"
-massdns_checking(){
-mkdir -p ~/tools
-command -v "massdns" >/dev/null 2>&1
-if [[ $? -ne 0 ]]; then
-         echo "Installing massdns.....\n\n:"
-         git clone https://github.com/blechschmidt/massdns.git
-         cd ~/tools/massdns
-          make
-          sudo mv ~/tools/massdns/bin/massdns /usr/local/bin
-         else
-         echo "massdns is already installed"
-    fi
 
-}
-massdns_checking
 sleep 2
 echo -e "\n\e[00;33m#################### Installing subdomain takeover tool ###########################\e[00m"
 sleep 2
@@ -243,4 +264,5 @@ if [[ $? -ne 0 ]]; then
     fi
 }
 subdomain_takeover
+sleep 2
 echo -e "\n\e[00;35m############ All Done Now Enjoy Your Hunting Automation #####################\e[00m"
