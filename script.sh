@@ -31,7 +31,7 @@ amass enum -passive -d $domain -o $domain/domain_enum/amass.txt
 sleep 2
 echo -e "\n\e[00;35m#################### shuffledns  Started ###########################\e[00m"
 
-shuffledns -d $domain -w /usr/share/wordlists/seclists/Discovery/DNS/deepmagic.com-prefixes-top500.txt -r ~/tools/dnsvalidator/resolvers/resolver.txt -o $domain/domain_enum/shuffledns.txt
+shuffledns -d $domain -w /usr/share/wordlists/seclists/Discovery/DNS/deepmagic.com-prefixes-top500.txt -r ~/tools/resolvers/resolver.txt -o $domain/domain_enum/shuffledns.txt
  
 
 sleep 2
@@ -43,7 +43,7 @@ sleep 2
 echo -e "\n\e[00;37m##################Resolving All Subdomains ###########################\e[00m"
 
 resolving_domains(){
-shuffledns -d $domain -list $domain/domain_enum/all.txt -o $domain/domains.txt -r ~/tools/dnsvalidator/resolvers/resolver.txt
+shuffledns -d $domain -list $domain/domain_enum/all.txt -o $domain/domains.txt -r ~/tools/resolvers/resolver.txt
 }
 resolving_domains
 sleep 2
