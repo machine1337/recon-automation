@@ -12,7 +12,7 @@ echo -e "\n\e[00;35m#########################################################\e[
 sleep 2
 domain=$1
 
-mkdir -p $domain $domain/domain_enum $domain/final_domains $domain/takeovers $domain/cors $domain/nuclei_scan $domain/waybackurls $domain/target_wordlist
+mkdir -p $domain $domain/domain_enum $domain/final_domains $domain/takeovers $domain/cors $domain/nuclei_scan $domain/waybackurls $domain/target_wordlist $domain/gf $domain/xss_scan $domain/openredirect
 
 echo -e "\n\e[00;33m#################### Domain Enumeration Started ###########################\e[00m"
 sleep 2
@@ -104,4 +104,35 @@ echo "..............Target Based Wordlist successfully Generated................
 }
 custom_wordlist
 sleep 2
-echo -e "\n\e[00;31m##############More Features will be Added in Future ###########################\e[00m"
+echo -e "\n\e[00;37m##################Gf Pattern Started ###########################\e[00m"
+gf_patterns(){
+
+gf xss $domain/waybackurls/valid.txt | tee $domain/gf/xss.txt
+cat $domain/gf/xss.txt | sed 's/=.*/=/' | sed 's/URL: //' | tee $domain/gf/purexss.txt
+gf ssrf $domain/waybackurls/valid.txt | tee $domain/gf/ssrf.txt
+gf sqli $domain/waybackurls/valid.txt | tee $domain/gf/sql.txt
+gf lfi $domain/waybackurls/valid.txt | tee $domain/gf/lfi.txt
+gf ssti $domain/waybackurls/valid.txt | tee $domain/gf/ssti.txt
+gf aws-keys $domain/waybackurls/valid.txt | tee $domain/gf/awskeys.txt
+gf redirect $domain/waybackurls/valid.txt | tee $domain/gf/redirect.txt
+cat $domain/gf/redirect.txt | sed 's/\=.*/=/' | tee $domain/gf/purered.txt
+gf idor $domain/waybackurls/valid.txt | tee $domain/gf/idor.txt
+}
+gf_patterns
+sleep 2
+echo -e "\n\e[00;31m###############Searching For Open Redirect | CRLF Injection ###########################\e[00m"
+open_redirect(){
+python3 ~/tools/Oralyzer/oralyzer.py -l $domain/gf/redirect.txt -p payloads.txt | tee $domain/openredirect/redirect.txt
+python3 ~/tools/Oralyzer/oralyzer.py -l $domain/gf/purered.txt -crlf | tee $domain/openredirect/crlf.txt
+
+}
+open_redirect
+sleep 2
+echo -e "\n\e[00;31m##################XSS Scanner Started ###########################\e[00m"
+xss_scanner(){
+
+cat $domain/gf/xss.txt | kxss | tee $domain/xss_scan/kxss1.txt
+cat $domain/gf/purexss.txt | kxss | tee $domain/xss_Scan/kxss2.txt
+dalfox file $domain/gf/xss.txt | tee $domain/xss_scan/dalfox.txt
+}
+xss_scanner
