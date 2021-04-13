@@ -122,8 +122,8 @@ gf_patterns
 sleep 2
 echo -e "\n\e[00;31m###############Searching For Open Redirect | CRLF Injection ###########################\e[00m"
 open_redirect(){
-python3 ~/tools/Oralyzer/oralyzer.py -l $domain/gf/redirect.txt -p payloads.txt | tee $domain/openredirect/redirect.txt
-python3 ~/tools/Oralyzer/oralyzer.py -l $domain/gf/purered.txt -crlf | tee $domain/openredirect/crlf.txt
+python3 ~/tools/Oralyzer/oralyzer.py -l $domain/gf/redirect.txt -p ~/tools/Oralyzer/payloads.txt | tee $domain/openredirect/redirect.txt
+python3 ~/tools/Oralyzer/oralyzer.py -l $domain/gf/purered.txt  -crlf | tee $domain/openredirect/crlf.txt
 
 }
 open_redirect
