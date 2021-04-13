@@ -136,11 +136,11 @@ if [[ $? -ne 0 ]]; then
          echo "httprobe is already installed"
    fi
    
-sleep 3
+sleep 2
 echo -e "\n\e[00;31m#################### Installing shuffledns tool ###########################\e[00m"
 command -v "shuffledns" >/dev/null 2>&1
-if [[ ! -d ~/usr/local/bin ]]; then
-         echo "Installing shuffledns.....\n\n:"
+if [[ $? -ne 0 ]]; then
+        echo "Installing shuffledns.....\n\n:"
         mkdir -p ~/tools
         cd ~/tools
         wget https://github.com/projectdiscovery/shuffledns/releases/download/v1.0.4/shuffledns_1.0.4_linux_amd64.tar.gz
@@ -149,10 +149,11 @@ if [[ ! -d ~/usr/local/bin ]]; then
         sudo mv shuffledns /usr/local/bin
          rm -R shuffledns*.gz
         echo "................shuffledns successfully installed.............."
+         
          else
-         echo "shuffledns is already installed"
+        echo "shuffledns is already installed"
    fi
-sleep 3
+sleep 2
 echo -e "\n\e[00;32m#################### Installing seclists wordlist ###########################\e[00m"
 
 
@@ -232,6 +233,37 @@ if [[ $? -ne 0 ]]; then
     else
     echo ".......ffuf already exists........."
     fi
+sleep 2
+echo -e "\n\e[00;36m#################### Installing Oralyzer tool ###########################\e[00m"
+if [ -d ~/tools/Oralyzer ]; then
+     echo "..................Oralyzer already exists..............."
+     else
+     
+    cd ~/tools
+    git clone https://github.com/r0075h3ll/Oralyzer.git
+    cd Oral*
+    pip3 install -r requirements.txt
+    echo ".................Oralyzer Installed successfully................."
+fi
+sleep 2
+echo -e "\n\e[00;37m#################### Installing kxss tool ###########################\e[00m"
+command -v "kxss" >/dev/null 2>&1
+if [[ $? -ne 0 ]]; then
+    echo "........installing kxss............"
+    go get github.com/Emoe/kxss
+    else
+    echo ".......kxss already exists........."
+    fi
+sleep 2
+echo -e "\n\e[00;35m#################### Installing dalfox tool ###########################\e[00m"
+command -v "kxss" >/dev/null 2>&1
+if [[ $? -ne 0 ]]; then
+    echo "........installing dalfox tool............"
+    GO111MODULE=on go get -v github.com/hahwul/dalfox/v2
+    else
+    echo ".......kxss already exists........."
+    fi
+
 }
 other_tools
 
