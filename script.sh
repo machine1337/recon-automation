@@ -10,6 +10,10 @@ echo -e "\e[00;37m#####       Coded By: Machine404            #####\e[00m"
 
 echo -e "\n\e[00;35m#########################################################\e[00m"
 sleep 2
+d=$(date +"%b-%d-%y %H:%M")
+
+echo -e "\n\e[00;34m################## Installation  Started On:  $d #####################\e[00m"
+sleep 2
 domain=$1
 
 mkdir -p $domain $domain/domain_enum $domain/final_domains $domain/takeovers $domain/cors $domain/nuclei_scan $domain/waybackurls $domain/target_wordlist $domain/gf $domain/xss_scan $domain/openredirect
@@ -31,7 +35,7 @@ amass enum -passive -d $domain -o $domain/domain_enum/amass.txt
 sleep 2
 echo -e "\n\e[00;35m#################### shuffledns  Started ###########################\e[00m"
 
-shuffledns -d $domain -w /usr/share/wordlists/seclists/Discovery/DNS/deepmagic.com-prefixes-top50000.txt -r ~/tools/resolvers/resolver.txt -o $domain/domain_enum/shuffledns.txt
+shuffledns -d $domain -w /usr/share/seclists/Discovery/DNS/deepmagic.com-prefixes-top50000.txt -r ~/tools/resolvers/resolver.txt -o $domain/domain_enum/shuffledns.txt
  
 
 sleep 2
