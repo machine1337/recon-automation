@@ -10,6 +10,11 @@ echo -e "\e[00;37m#####       Coded By: Machine404            #####\e[00m"
 
 echo -e "\n\e[00;35m#########################################################\e[00m"
 sleep 2
+d=$(date +"%b-%d-%y %H:%M")
+
+echo -e "\n\e[00;34m################## Installation  Started On:  $d #####################\e[00m"
+sleep 1
+
 echo -e "\n\e[00;31m#################### Installing assetfinder tool ###########################\e[00m"
 sleep 1
 assetfinder_checking(){
@@ -156,20 +161,18 @@ if [[ $? -ne 0 ]]; then
 sleep 2
 echo -e "\n\e[00;32m#################### Installing seclists wordlist ###########################\e[00m"
 
-
-if [[ ! -d /usr/share/wordlists/seclists ]]; then
-        echo "Moving Seclists to /usr/share/....\n\n"
-        sudo mv /usr/share/wordlists/seclists /usr/share/
+command -v "seclists" >/dev/null 2>&1
+if [[ ! -d /usr/share/seclists ]]; then
+        sudo apt update
+        sudo apt install seclists
+        echo "....................Seclists Successfully Installed................."
+        
+        else
+        echo ".................Seclists Already Exists................."
+fi
        
        
-       if [[ ! -d /usr/share/seclists ]]; then
-       sudo apt update
-       sudo apt install seclists
-       else
-       echo "seclists wordlist moved to /usr/share/wordlists/.....\n\n"
-       sudo mv /usr/share/seclists /usr/share/wordlists/
-       fi
-    fi
+    
     
 sleep 2
 echo -e "\n\e[00;37m#################### Installing Cors misconfiguration tool ###########################\e[00m"
@@ -261,7 +264,7 @@ if [[ $? -ne 0 ]]; then
     echo "........installing dalfox tool............"
     GO111MODULE=on go get -v github.com/hahwul/dalfox/v2
     else
-    echo ".......kxss already exists........."
+    echo ".......dalfox already exists........."
     fi
 
 }
