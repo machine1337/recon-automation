@@ -259,7 +259,7 @@ if [[ $? -ne 0 ]]; then
     fi
 sleep 2
 echo -e "\n\e[00;35m#################### Installing dalfox tool ###########################\e[00m"
-command -v "kxss" >/dev/null 2>&1
+command -v "dalfox" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
     echo "........installing dalfox tool............"
     GO111MODULE=on go get -v github.com/hahwul/dalfox/v2
