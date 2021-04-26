@@ -9,20 +9,20 @@ A simple recon automation script that definitely will help you in bug bounty hun
     4)Now run tar -c /usr/local -xzf {go .gz folder}.
     5)then open sudo nano $HOME/.zshrc or sudo nano $HOME/.bashrc add the following commands.
     6)export PATH=$PATH:/usr/local/go/bin 
-    export GOPATH=/home/yourusername/go   
-    export PATH=$PATH:/home/username/go/bin 
-    export PATH=$PATH:/home/username/go/  
+    export GOPATH=$HOME/go   
+    export PATH=$PATH:$HOME/go/bin 
+    export PATH=$PATH:$HOME/go/  
 
 # Installation:
-1)  Simply Clone the repository
-2)  chmod +x install.sh
-3)  ./install.sh
-4)  chmod +x script.sh
-5)  Now run the script as ./script.sh
+    1)  Simply Clone the repository
+    2)  chmod +x install.sh
+    3)  ./install.sh
+    4)  chmod +x script.sh
+    5)  Now run the script as ./script.sh
 
 
 # Usage:
-./script.sh example.com
+    ./script.sh example.com
 
 # Current Features:
 1) This script will collect all the subdomains using amass, assetfinder, subfinder and crt.sh
