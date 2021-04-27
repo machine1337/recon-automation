@@ -25,27 +25,30 @@ A simple recon automation script that definitely will help you in bug bounty hun
     ./script.sh example.com
 
 # Current Features:
-1) This script will collect all the subdomains using amass, assetfinder, subfinder and crt.sh
-2) For subdomain bruteforcing, shuffledns is used in the script.
-3) This script will gather all the subdomains and put them in a single .txt file.
-4) This script will resolves all the subdomains using shuffledns.
-5) And Finally will check http/https services on the given domains using httpx tool.
-6) It will check for the Following Vulnerablities:
+    1) This script will collect all the subdomains using amass, assetfinder, subfinder and crt.sh
+    2) For subdomain bruteforcing, shuffledns is used in the script.
+    3) This script will gather all the subdomains and put them in a single .txt file.
+    4) This script will resolves all the subdomains using shuffledns.
+    5) And Finally will check http/https services on the given domains using httpx tool.
+    6) It will check for the Following Vulnerablities:
     a) Subdomain takeover
     b) CORS misconfiguration
     c) nuclei scan
-7) This script will collect all the urls using waybackurls and will filter them and store them in single file.
-8) ffuf is used in this script to find valid urls.
-9) This script will generate target based paths/parameters using unfurl for further attack.
+    d) Open Redirect Scanner
+    e) LFI Scanner
+    f) Advance XSS Scanner and method used.
+    g) Sqli Scan
+    7) This script will collect all the urls using waybackurls and will filter them and store them in single file.
+    8) ffuf is used in this script to find valid urls.
+    9) This script will generate target based paths/parameters using unfurl for further attack.
 
 # Future Features:
-1) xss scanning automation
-2) sql scanning
-3) open redirect automation
-4) Host Header Injection Automation
-5) javascript enumeration
-6) sensitive data exposures
-7) and more will be added 
+    1. SSRF Automation
+    2. Host Header Injection Automation
+    3. Hidden and Sensitive Directories bruteforce
+    4. CRLF Injection
+    5. HTTP Request Smuggling Automation
+
 
 # Special Thanks To:
 1) @tomnomnom
@@ -53,19 +56,20 @@ A simple recon automation script that definitely will help you in bug bounty hun
 3) and other infosec community.
 
 # TOOLS Used:
-Subfinder
-Amass
-Assetfinder
-waybackurls
-unfurl
-subjack
-subzy
-ffuf
-shuffledns
-httpx
-nuclei
-crt.sh
-massdns
+    Subfinder
+    Amass
+    Assetfinder
+    waybackurls
+    unfurl
+    subjack
+    subzy
+    ffuf
+    shuffledns
+    httpx
+    nuclei
+    crt.sh
+    massdns
+    
 
 # Author
-I am a CS student and bug bounty hunter, Ethical Hacker from Pakistan.
+    I am a CS student and bug bounty hunter, Ethical Hacker from Pakistan.
