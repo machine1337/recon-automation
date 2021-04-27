@@ -24,13 +24,60 @@ if [[ $? -ne 0 ]]; then
         go get -u github.com/tomnomnom/assetfinder
         echo ".............assetfinder successfully installed.............."
         else
-        echo "assetfinder already installed"
+        echo "...........assetfinder already installed................"
     fi
-
+sleep 1
+echo -e "\n\e[00;34m#################### Installing Gau tool ###########################\e[00m"
+command -v "gau" >/dev/null 2>&1
+if [[ $? -ne 0 ]]; then
+            echo "..........Installing gau............"
+            go get -u -v github.com/lc/gau
+            echo ".........gau successfully installed................"
+            else
+            echo "...........gau already exists....................."
+       fi
+sleep 1
+echo -e "\n\e[00;32m#################### Installing qsreplace tool ###########################\e[00m"
+command -v "qsreplace" >/dev/null 2>&1
+if [[ $? -ne 0 ]]; then
+            echo "..........Installing qsreplace............"
+            go get -u github.com/tomnomnom/qsreplace
+            echo ".........qsreplace successfully installed................"
+            else
+            echo "...........qsreplace already exists....................."
+       fi
 }
 assetfinder_checking
 sleep 2
-echo -e "\n\e[00;32m#################### Installing amass tool ###########################\e[00m"
+echo -e "\n\e[00;36m#################### Installing gf tool and patterns ##########################\e[00m"
+checking_gf(){
+command -v "gf" >/dev/null 2>&1
+if [[ $? -ne 0 ]]; then
+         echo "............Installing gf tool............."
+         go get -u github.com/tomnomnom/gf
+         echo 'source $GOPATH/pkg/mod/github.com/tomnomnom/gf*/gf-completion.zsh' >> ~/.zshrc
+         cp -r $GOPATH/pkg/mod/github.com/tomnomnom/gf*/examples ~/.gf
+         source ~/.zshrc
+         echo "..............Gf tool Successfully installed.............."
+         else
+         echo "................Gf tool already exsist................."
+    fi
+sleep 1
+echo -e "\n\e[00;32m#################### Installing Gf Patterns  ###########################\e[00m"
+if [[ ! -d ~/Gf-Patterns  ]]; then
+        echo "..............Installing Gf Patterns................."
+        cd ~
+        git clone https://github.com/1ndianl33t/Gf-Patterns.git
+        sudo mv ~/Gf-Patterns/*.json ~/.gf
+        echo "...........Gf Patterns Successfully Installed............"
+        else
+        echo "...........Gf Patterns Already exsist................."
+    fi    
+
+}
+checking_gf
+sleep 2
+echo -e "\n\e[00;37m#################### Installing amass tool ###########################\e[00m"
 amass_checking(){
 
 command -v "amass" >/dev/null 2>&1
@@ -40,7 +87,7 @@ if [[ $? -ne 0 ]]; then
          sudo apt-get install amass
          echo "................Amass successfully installed.............."
          else
-         echo "Amass is already installed"
+         echo "...............Amass is already installed................."
    fi
 }
 amass_checking
@@ -55,7 +102,7 @@ if [[ $? -ne 0 ]]; then
          sudo apt-get install jq
          echo ".................jq successfully installed.............."
          else
-         echo "jq is already installed"
+         echo ".............jq is already installed..............."
    fi
 
 }
@@ -70,7 +117,7 @@ if [[ $? -ne 0 ]]; then
          GO111MODULE=on go get -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
          echo "................subfinder successfully installed.............."
          else
-         echo "subfinder is already installed"
+         echo "............subfinder is already installed..............."
    fi
 
 }
@@ -90,7 +137,7 @@ if [[ $? -ne 0 ]]; then
           sudo mv massdns /usr/local/bin
           echo "............massdns installed successfully............"
          else
-         echo "massdns is already installed"
+         echo "..............massdns is already installed................"
     fi
 
 }
@@ -127,7 +174,7 @@ if [[ $? -ne 0 ]]; then
         go get -v github.com/projectdiscovery/httpx/cmd/httpx
         echo ".................httpx successfully installed.............."
          else
-         echo "httpx is already installed"
+         echo "................httpx is already installed..............."
    fi
 
 sleep 2
@@ -138,7 +185,7 @@ if [[ $? -ne 0 ]]; then
          go get -u github.com/tomnomnom/httprobe
          echo ".............httprobe successfully installed.............."
          else
-         echo "httprobe is already installed"
+         echo "............httprobe is already installed................."
    fi
    
 sleep 2
@@ -156,7 +203,7 @@ if [[ $? -ne 0 ]]; then
         echo "................shuffledns successfully installed.............."
          
          else
-        echo "shuffledns is already installed"
+        echo "..............shuffledns is already installed.................."
    fi
 sleep 2
 echo -e "\n\e[00;32m#################### Installing seclists wordlist ###########################\e[00m"
@@ -170,9 +217,16 @@ if [[ ! -d /usr/share/seclists ]]; then
         else
         echo ".................Seclists Already Exists................."
 fi
-       
-       
-    
+sleep 1      
+echo -e "\n\e[00;31m#################### Downloading  LFI Payloads ###########################\e[00m"    
+if [[ ! -f ~/tools/dotdotpwn.txt ]]; then
+         cd ~/tools
+        wget https://raw.githubusercontent.com/swisskyrepo/PayloadsAllTheThings/master/Directory%20Traversal/Intruder/dotdotpwn.txt
+        cat dotdotpwn.txt | head -n 120 > ~/tools/lfipayloads.txt
+        echo "....................LFI Payloads Successfully Downloaded................."
+        else
+        echo ".................LFI Payloads Already Exists................."
+fi  
     
 sleep 2
 echo -e "\n\e[00;37m#################### Installing Cors misconfiguration tool ###########################\e[00m"
@@ -220,12 +274,11 @@ if [[ $? -ne 0 ]]; then
 sleep 2
 echo -e "\n\e[00;32m#################### Installing unfurl ###########################\e[00m"
 command -v "unfurl" >/dev/null 2>&1
-if [[ ! -d ~/go/bin ]]; then
-        echo "........Unfurl already exists..........."
-        else
-        go get -u github.com/tomnomnom/unfurl
+if [[ $? -ne 0 ]]; then
+         go get -u github.com/tomnomnom/unfurl
         echo "......Unfurl installed successfully......"
-        
+        else
+        echo "........Unfurl already exists..........."   
     fi
 sleep 2
 echo -e "\n\e[00;32m#################### Installing ffuf ###########################\e[00m"
@@ -237,16 +290,14 @@ if [[ $? -ne 0 ]]; then
     echo ".......ffuf already exists........."
     fi
 sleep 2
-echo -e "\n\e[00;36m#################### Installing Oralyzer tool ###########################\e[00m"
-if [ -d ~/tools/Oralyzer ]; then
-     echo "..................Oralyzer already exists..............."
+echo -e "\n\e[00;36m#################### Installing OpenRedireX tool ###########################\e[00m"
+if [ -d ~/tools/OpenRedireX ]; then
+     echo "..................OpenRedireX already exists..............."
      else
      
     cd ~/tools
-    git clone https://github.com/r0075h3ll/Oralyzer.git
-    cd Oral*
-    pip3 install -r requirements.txt
-    echo ".................Oralyzer Installed successfully................."
+    git clone https://github.com/devanshbatham/OpenRedireX
+    echo ".................OpenRedireX Installed successfully................."
 fi
 sleep 2
 echo -e "\n\e[00;37m#################### Installing kxss tool ###########################\e[00m"
@@ -302,4 +353,38 @@ if [[ $? -ne 0 ]]; then
 }
 subdomain_takeover
 sleep 2
+echo -e "\n\e[00;31m#################### Installing xss tools ###########################\e[00m"
+xss_tools(){
+command -v "Gxss" >/dev/null 2>&1
+if [[ $? -ne 0 ]]; then
+        echo "...................Installing Gxss tool...................."
+        go get -u github.com/KathanP19/Gxss
+        echo "...............Gxss successfully installed.................."
+        else
+        echo "..................Gxss already installed.................."
+     fi
+sleep 1
+echo -e "\n\e[00;32m############ Installing ParamSpider tool #####################\e[00m"
+if [[ ! -d ~/tools/ParamSpider ]]; then
+       cd ~/tools
+        git clone https://github.com/devanshbatham/ParamSpider
+       cd ParamSpider
+       pip3 install -r requirements.txt
+       echo "............ParamSpider Successfully Installed................"
+       else
+       echo "............ParamSpider already installed....................."
+    fi
+sleep 1
+echo -e "\n\e[00;36m############ Installing Arjun tool #####################\e[00m"
+if [[ ! -d ~/tools/Arjun ]]; then
+       cd ~/tools
+      git clone https://github.com/s0md3v/Arjun.git
+       cd Arjun
+       sudo python3 setup.py install
+       echo "............Arjun Successfully Installed................"
+       else
+       echo "............Arjun already installed....................."
+    fi
+}
+xss_tools
 echo -e "\n\e[00;35m############ All Done Now Enjoy Your Hunting Automation #####################\e[00m"
