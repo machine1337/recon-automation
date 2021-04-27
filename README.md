@@ -73,4 +73,4 @@ A simple recon automation script that definitely will help you in bug bounty hun
     
 
 # Author
-    I am a CS student and bug bounty hunter, Ethical Hacker from Pakistan.
+    @whoami4041 Twitter
