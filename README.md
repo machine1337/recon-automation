@@ -30,7 +30,8 @@ A simple recon automation script that definitely will help you in bug bounty hun
     3) This script will gather all the subdomains and put them in a single .txt file.
     4) This script will resolves all the subdomains using shuffledns.
     5) And Finally will check http/https services on the given domains using httpx tool.
-    6) It will check for the Following Vulnerablities:
+    6) Gf tool and its patterns installation and also will set their path automatically.
+    7) It will check for the Following Vulnerablities:
     a) Subdomain takeover
     b) CORS misconfiguration
     c) nuclei scan
