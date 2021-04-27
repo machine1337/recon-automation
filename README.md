@@ -1,7 +1,7 @@
 # recon_automation
 ![view](https://user-images.githubusercontent.com/82051128/114009556-ae259f80-987c-11eb-998c-6eb7765ffa8a.PNG)
-# About:
-A simple recon automation script that definitely will help you in bug bounty hunting and penetration testing.
+# Note:
+     If u are using .bashrc/bash shell then just replace .zshrc to .bashrc in the line 58 of install.sh script.
 # Requirements:
     1)Make Sure go language is installed and set to $PATH.
     2)or Download the go language from its official website.
