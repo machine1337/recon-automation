@@ -47,13 +47,13 @@ sleep 2
 echo -e "\n\e[00;37m##################Resolving All Subdomains ###########################\e[00m"
 
 resolving_domains(){
-shuffledns -d $domain -list $domain/domain_enum/all.txt -o $domain/domains.txt -r ~/tools/resolvers/resolver.txt
+shuffledns -d $domain -list $domain/domain_enum/all.txt -o $domain/final_domains/domains.txt -r ~/tools/resolvers/resolver.txt
 }
 resolving_domains
 sleep 2
 echo -e "\n\e[00;30m##################Checking Services on subdomains ###########################\e[00m"
 http_prob(){
-cat $domain/domains.txt | httpx -threads 30 -o $domain/final_domains/httpx.txt
+cat $domain/final_domains/domains.txt | httpx -threads 30 -o $domain/final_domains/httpx.txt
 }
 http_prob
 sleep 2
@@ -73,7 +73,7 @@ sleep 2
 echo -e "\n\e[00;34m#############...Collecting URLS ...#####################\e[00m"
 wayback_data(){
 
-cat $domain/domains.txt | gau | tee $domain/waybackurls/tmp.txt
+cat $domain/final_domains/domains.txt | gau | tee $domain/waybackurls/tmp.txt
 cat $domain/waybackurls/tmp.txt | egrep -v "\.woff|\.ttf|\.svg|\.eot|\.png|\.jpep|\.jpeg|\.css|\.ico|\jpg" | sed 's/:80//g;s/:443//g' | sort -u >> $domain/waybackurls/wayback.txt
 
 rm $domain/waybackurls/tmp.txt
@@ -125,7 +125,7 @@ open_redirect
 sleep 2
 echo -e "\n\e[00;33m###############Searching For Reflected Params And XSS ###########################\e[00m"
 param_reflected(){
-python3 ~/tools/ParamSpider/paramspider.py --domain $domain/final_domains/httpx.txt --exclude png,svg,jpg -o $domain/ref_xss/paramspider.txt
+python3 ~/tools/ParamSpider/paramspider.py --domain $domain/final_domains/httpx.txt --exclude png,svg,jpg -o $domain/vulnerabilities/ref_xss/paramspider.txt
 cat $domain/waybackurls/valid.txt | Gxss -p khan | dalfox pipe --mining-dict ~/tools/Arjun/arjun/db/params.txt --skip-bav -o $domain/vulnerabilities/ref_xss/xss.txt
  
 }
@@ -134,7 +134,7 @@ echo -e "\n\e[00;34m##################XSS Scanner Started ######################
 xss_scanner(){
 
 cat $domain/gf/xss.txt | kxss | tee $domain/vulnerabilities/xss_scan/kxss.txt
-cat $domain/gf/xss.txt | grep '=' | qsreplace '"><script>confirm(1)</script>' | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<script>confirm(1)" && echo "$host \033[0;31mVulnerable\n";done | tee $domain/vulnerabilities/xss_scan/vulnxss.txt
+cat $domain/gf/xss.txt | grep '=' | qsreplace '"><script>confirm(1)</script>' | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<script>confirm(1)" && echo "$host \033[0;32mVulnerable\n";done | tee $domain/vulnerabilities/xss_scan/vulnxss.txt
 }
 xss_scanner
 sleep 2
