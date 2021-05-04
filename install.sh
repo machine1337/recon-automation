@@ -48,7 +48,7 @@ if [[ $? -ne 0 ]]; then
        fi
 }
 assetfinder_checking
-sleep 2
+sleep 1
 echo -e "\n\e[00;36m#################### Installing gf tool and patterns ##########################\e[00m"
 checking_gf(){
 command -v "gf" >/dev/null 2>&1
@@ -76,7 +76,7 @@ if [[ ! -d ~/Gf-Patterns  ]]; then
 
 }
 checking_gf
-sleep 2
+sleep 1
 echo -e "\n\e[00;37m#################### Installing amass tool ###########################\e[00m"
 amass_checking(){
 
@@ -91,7 +91,7 @@ if [[ $? -ne 0 ]]; then
    fi
 }
 amass_checking
-sleep 2
+sleep 1
 echo -e "\n\e[00;33m#################### Installing jq tool ###########################\e[00m"
 jq_checking(){
 
@@ -108,7 +108,7 @@ if [[ $? -ne 0 ]]; then
 }
 jq_checking
 
-sleep 2
+sleep 1
 echo -e "\n\e[00;34m#################### Installing subfinder tool ###########################\e[00m"
 subfinder_checking(){
 command -v "subfinder" >/dev/null 2>&1
@@ -122,7 +122,7 @@ if [[ $? -ne 0 ]]; then
 
 }
 subfinder_checking
-sleep 2
+sleep 1
 echo -e "\n\e[00;35m#################### Installing Massdns tool ###########################\e[00m"
 massdns_checking(){
 mkdir -p ~/tools
@@ -142,7 +142,28 @@ if [[ $? -ne 0 ]]; then
 
 }
 massdns_checking
-sleep 2
+sleep 1
+echo -e "\n\e[00;32m#################### Installing nuclei tool ###########################\e[00m"
+command -v "nuclei" >/dev/null 2>&1
+if [[ $? -ne 0 ]]; then
+          echo "Installing nuclei tool..........\n\n"
+         GO111MODULE=on go get -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei
+      
+          else
+          echo "...........Nuclei tool already exists..................."
+       fi
+sleep 1
+echo -e "\n\e[00;37m#################### Installing nuclei templates ###########################\e[00m"
+if [[ ! -d ~/tools/nuclei-templates ]]; then
+         echo ".............Installing nuclei templates..........."
+         mkdir -p ~/tools
+         cd ~/tools
+         git clone https://github.com/projectdiscovery/nuclei-templates.git
+         echo "...............Nuclei templates installation done................."
+         else
+         echo "................nuclei templates already exists................"
+  fi
+sleep 1
 echo -e "\n\e[00;35m#################### Installing dnsvalidator tool ###########################\e[00m"
 dnsvalidator_installing(){
 mkdir -p ~/tools
@@ -164,7 +185,7 @@ fi
 
 }
 dnsvalidator_installing
-sleep 2
+sleep 1
 
 other_tools(){
 echo -e "\n\e[00;36m#################### Installing httpx tool ###########################\e[00m"
@@ -177,7 +198,7 @@ if [[ $? -ne 0 ]]; then
          echo "................httpx is already installed..............."
    fi
 
-sleep 2
+sleep 1
 echo -e "\n\e[00;37m#################### Installing httprobe tool ###########################\e[00m"
 command -v "httprobe" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
@@ -188,7 +209,7 @@ if [[ $? -ne 0 ]]; then
          echo "............httprobe is already installed................."
    fi
    
-sleep 2
+sleep 1
 echo -e "\n\e[00;31m#################### Installing shuffledns tool ###########################\e[00m"
 command -v "shuffledns" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
@@ -205,7 +226,7 @@ if [[ $? -ne 0 ]]; then
          else
         echo "..............shuffledns is already installed.................."
    fi
-sleep 2
+sleep 1
 echo -e "\n\e[00;32m#################### Installing seclists wordlist ###########################\e[00m"
 
 command -v "seclists" >/dev/null 2>&1
@@ -228,7 +249,7 @@ if [[ ! -f ~/tools/dotdotpwn.txt ]]; then
         echo ".................LFI Payloads Already Exists................."
 fi  
     
-sleep 2
+sleep 1
 echo -e "\n\e[00;37m#################### Installing Cors misconfiguration tool ###########################\e[00m"
 command -v "Corsy" >/dev/null 2>&1
 if [[ ! -d ~/tools/Corsy ]]; then
@@ -243,26 +264,9 @@ if [[ ! -d ~/tools/Corsy ]]; then
         echo ".............Corsy already installed............."
     fi
 
-sleep 2 
-echo -e "\n\e[00;35m#################### Installing nuclei tool ###########################\e[00m"
-command -v "nuclei" >/dev/null 2>&1
-if [[ ! -d ~/tools/nuclei-templates ]]; then
-         
-        mkdir -p ~/tools
-        cd ~/tools
-        wget https://github.com/projectdiscovery/nuclei/releases/download/v2.3.4/nuclei_2.3.4_linux_amd64.tar.gz
-        tar -xvzf nuclei*.gz
-        sudo mv nuclei /usr/local/bin
-        rm -R nuclei*.gz
-        git clone https://github.com/projectdiscovery/nuclei-templates.git
-        if [[ ! -d ~/tools/nuclei-templates ]]; then
-        find ~ -name nuclei-templates -print0 | xargs -0 -I '{}' mv "{}" ~/tools
-        else
-        
-         echo "..............nuclei tools already exists................."
-   fi
-      fi  
-sleep 2
+
+
+sleep 1
 echo -e "\n\e[00;36m#################### Installing waybackurls ###########################\e[00m"
 command -v "waybackurls" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
@@ -271,7 +275,7 @@ if [[ $? -ne 0 ]]; then
         else
         echo "........waybackurls already exists..........."
     fi
-sleep 2
+sleep 1
 echo -e "\n\e[00;32m#################### Installing unfurl ###########################\e[00m"
 command -v "unfurl" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
@@ -280,7 +284,7 @@ if [[ $? -ne 0 ]]; then
         else
         echo "........Unfurl already exists..........."   
     fi
-sleep 2
+sleep 1
 echo -e "\n\e[00;32m#################### Installing ffuf ###########################\e[00m"
 command -v "ffuf" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
@@ -289,7 +293,7 @@ if [[ $? -ne 0 ]]; then
     else
     echo ".......ffuf already exists........."
     fi
-sleep 2
+sleep 1
 echo -e "\n\e[00;36m#################### Installing OpenRedireX tool ###########################\e[00m"
 if [ -d ~/tools/OpenRedireX ]; then
      echo "..................OpenRedireX already exists..............."
@@ -299,7 +303,7 @@ if [ -d ~/tools/OpenRedireX ]; then
     git clone https://github.com/devanshbatham/OpenRedireX
     echo ".................OpenRedireX Installed successfully................."
 fi
-sleep 2
+sleep 1
 echo -e "\n\e[00;37m#################### Installing kxss tool ###########################\e[00m"
 command -v "kxss" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
@@ -308,7 +312,7 @@ if [[ $? -ne 0 ]]; then
     else
     echo ".......kxss already exists........."
     fi
-sleep 2
+sleep 1
 echo -e "\n\e[00;35m#################### Installing dalfox tool ###########################\e[00m"
 command -v "dalfox" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
@@ -323,7 +327,7 @@ other_tools
 
 sleep 2
 echo -e "\n\e[00;33m#################### Installing subdomain takeover tool ###########################\e[00m"
-sleep 2
+sleep 1
 subdomain_takeover(){
 echo -e "\n\e[00;34m#################### Installing subzy takeover tool ###########################\e[00m"
 command -v "subzy" >/dev/null 2>&1
@@ -335,7 +339,7 @@ if [[ $? -ne 0 ]]; then
          echo "subzy is already installed"
     fi
 echo -e "\n\e[00;36m#################### Installing subjack takeover tool ###########################\e[00m"
-sleep 2
+sleep 1
 command -v "subjack" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
           echo "..........Installing subjack tool........\n\n:"
@@ -352,7 +356,7 @@ if [[ $? -ne 0 ]]; then
     fi
 }
 subdomain_takeover
-sleep 2
+sleep 1
 echo -e "\n\e[00;31m#################### Installing xss tools ###########################\e[00m"
 xss_tools(){
 command -v "Gxss" >/dev/null 2>&1
