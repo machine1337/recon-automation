@@ -12,6 +12,7 @@
     export GOPATH=$HOME/go   
     export PATH=$PATH:$HOME/go/bin 
     export PATH=$PATH:$HOME/go/  
+    7) sudo source ~/.zshrc or source ~/.bashrc
 
 # Installation:
     1)  Simply Clone the repository
