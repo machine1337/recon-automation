@@ -2,7 +2,7 @@
 function bounty_recon(){
 echo -e "\n\e[00;33m#########################################################\e[00m"
 echo -e "\e[00;32m#                                                       #\e[00m" 
-echo -e "\e[00;31m#\e[00m" "\e[01;32m           JavaScript Recon Automation \e[00m" "\e[00;31m#\e[00m"
+echo -e "\e[00;31m#\e[00m" "\e[01;32m        Bug Bounty Recon Automation Script \e[00m" "\e[00;31m#\e[00m"
 echo -e "\e[00;34m#                                                       #\e[00m" 
 echo -e "\e[00;35m#########################################################\e[00m"
 echo -e ""
