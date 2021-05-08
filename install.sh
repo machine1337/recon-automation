@@ -308,7 +308,7 @@ echo -e "\n\e[00;37m#################### Installing kxss tool ##################
 command -v "kxss" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
     echo "........installing kxss............"
-    go get github.com/Emoe/kxss
+    go get -u github.com/tomnomnom/hacks/kxss
     else
     echo ".......kxss already exists........."
     fi
