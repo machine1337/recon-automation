@@ -23,7 +23,7 @@
 
 
 # Usage:
-    ./script.sh example.com
+    ./script.sh 
 
 # Current Features:
     1) This script will collect all the subdomains using amass, assetfinder, subfinder and crt.sh
