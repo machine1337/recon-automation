@@ -139,11 +139,6 @@ cat $domain/vulnerabilities/xss_scan/kxss.txt | awk '{print $9}' | sed 's/=.*/=/
 cat $domain/vulnerabilities/xss_scan/kxss1.txt | dalfox pipe | tee $domain/vulnerabilities/xss_scan/dalfoxss.txt
 cat $domain/gf/xss.txt | grep "=" | qsreplace "'><sCriPt class=khan>prompt(1)</script>" | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "'><sCriPt class=khan>prompt(1)" && echo "$host \033[0;31mVulnerable\n";done | tee $domain/vulnerabilities/xss_scan/vulnxss.txt
 
-echo -e "\n\e[00;33m#############...Nuclei Scanner Started...#####################\e[00m"
-cat $domain/final_domains/httpx.txt | nuclei -t ~/tools/nuclei-templates/cves/ -c 50 -o $domain/nuclei_scan/cves.txt
-cat $domain/final_domains/httpx.txt | nuclei -t ~/tools/nuclei-templates/vulnerabilities/ -c 50 -o $domain/nuclei_scan/vulnerabilities.txt
-cat $domain/final_domains/httpx.txt | nuclei -t ~/tools/nuclei-templates/misconfiguration/ -c 50 -o $domain/nuclei_scan/misconfiguration.txt
-cat $domain/final_domains/httpx.txt | nuclei -t ~/tools/nuclei-templates/technologies/ -c 50 -o $domain/nuclei_scan/tech.txt
 echo -e "\n\e[00;35m#############...Searching For Sql Injection...#####################\e[00m"
 sqlmap -m $domain/gf/sql.txt --batch --random-agent --level 1 | tee $domain/vulnerabilities/sqli/sqlmap.txt
 echo -e "\n\e[00;37m#############...Searching For LFI vulnerabilities...#####################\e[00m"
