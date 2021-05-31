@@ -19,7 +19,7 @@
     2)  chmod +x install.sh
     3)  ./install.sh
     4)  chmod +x script.sh
-    5)  Now run the script as ./script.sh
+   
 
 
 # Usage:
