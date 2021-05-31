@@ -1,22 +1,33 @@
 #!/bin/bash
-function bounty_recon(){
-echo -e "\n\e[00;33m#########################################################\e[00m"
-echo -e "\e[00;32m#                                                       #\e[00m" 
-echo -e "\e[00;31m#\e[00m" "\e[01;32m        Bug Bounty Recon Automation Script \e[00m" "\e[00;31m#\e[00m"
-echo -e "\e[00;34m#                                                       #\e[00m" 
-echo -e "\e[00;35m#########################################################\e[00m"
-echo -e ""
-echo -e "\e[00;36m##### https://www.facebook.com/unknownclay/ #####\e[00m"
-echo -e "\e[00;37m#####       Coded By: Machine404            #####\e[00m"
+NC='\033[0m'
+RED='\033[1;38;5;196m'
+GREEN='\033[1;38;5;040m'
+ORANGE='\033[1;38;5;202m'
+BLUE='\033[1;38;5;012m'
+BLUE2='\033[1;38;5;032m'
+PINK='\033[1;38;5;013m'
+GRAY='\033[1;38;5;004m'
+NEW='\033[1;38;5;154m'
+YELLOW='\033[1;38;5;214m'
+CG='\033[1;38;5;087m'
+CP='\033[1;38;5;221m'
+CPO='\033[1;38;5;205m'
+CN='\033[1;38;5;247m'
+CNC='\033[1;38;5;051m'
 
-echo -e "\n\e[00;35m#########################################################\e[00m"
+function bounty_recon(){
+echo -e ${CNC}"#######################################################"                                                    
+echo -e ${RED} "      Bug Bounty Recon Full Automation               #"
+echo -e ${CG}"        https://facebook.com/unknownclay              #"
+echo -e ${CP}"        Coded By:  Machine1337	                      #"
+echo -e ${CPO}"#######################################################"
 }
 d=$(date +"%b-%d-%y %H:%M")
 
 function single_recon(){
 clear
 bounty_recon
-echo -n "[+] Enter Single domain (e.g evil.com) : " 
+echo -n -e ${ORANGE}"\n[+] Enter Single domain (e.g evil.com) : " 
            read domain
 mkdir -p $domain $domain/vulnerabilities $domain/vulnerabilities/cors $domain/waybackurls $domain/target_wordlist $domain/gf $domain/vulnerabilities/openredirect/ $domain/vulnerabilities/xss_scan $domain/nuclei_scan $domain/vulnerabilities/LFI $domain/vulnerabilities/sqli
 echo -e "\n\e[00;34m################ Single Target Recon Started On: $d  ##################\e[00m"
@@ -75,7 +86,7 @@ cat $domain/gf/lfi.txt | qsreplace FUZZ | while read url ; do ffuf -u $url -mr "
 function massive_recon(){
 clear
 bounty_recon
-echo -n "[+] Full Recon with subdomains (e.g *.example.com): "
+echo -n -e ${BLUE2}"\n[+] Full Recon with subdomains (e.g *.example.com): "
 read domain
 mkdir -p $domain $domain/domain_enum $domain/final_domains $domain/takeovers $domain/vulnerabilities $domain/vulnerabilities/xss_scan $domain/vulnerabilities/sqli $domain/vulnerabilities/cors  $domain/nuclei_scan $domain/waybackurls $domain/target_wordlist $domain/gf  $domain/vulnerabilities/LFI $domain/vulnerabilities/openredirect
 echo -e "\n\e[00;34m################ Full Recon Started On: $d  ##################\e[00m"
@@ -147,14 +158,18 @@ cat $domain/gf/lfi.txt | qsreplace FUZZ | while read url ; do ffuf -u $url -mr "
 menu(){
 clear
 bounty_recon
-echo -e "\n[*] Which Type of recon u want to Perform\n "
-echo -e "[1] Single domain Recon\n[2] Full Target Recon with Subdomains\n"
-echo -n "[+] Select: "
+echo -e -n ${YELLOW}"\n[*] Which Type of recon u want to Perform\n "
+echo -e "  ${NC}[${CG}"1"${NC}]${CNC} Single Target Recon"
+echo -e "   ${NC}[${CG}"2"${NC}]${CNC} Full Target Recon With Subdomains "
+echo -e "   ${NC}[${CG}"3"${NC}]${CNC} Exit"
+echo -n -e ${RED}"\n[+] Select: "
         read bounty_play
                 if [ $bounty_play -eq 1 ]; then
                         single_recon
                 elif [ $bounty_play -eq 2 ]; then
                         massive_recon
+                elif [ $js_play -eq 3 ]; then
+                      exit
                 fi
 
 }
