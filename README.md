@@ -1,5 +1,6 @@
 # recon_automation
-![view](https://user-images.githubusercontent.com/82051128/114009556-ae259f80-987c-11eb-998c-6eb7765ffa8a.PNG)
+![recon](https://user-images.githubusercontent.com/82051128/120198241-5469a200-c23b-11eb-8f73-df12e8cbd71e.png)
+
 # Note:
      If u are using .bashrc/bash shell then just replace .zshrc to .bashrc in the line 58 of install.sh script.
 # Requirements:
