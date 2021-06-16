@@ -209,7 +209,7 @@ echo -e ${CP}"[+]Installing httprobe\n"
 command -v "httprobe" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then        
          go get -u github.com/tomnomnom/httprobe >/dev/null 2>&1
-         echo -e".............httprobe successfully installed..............\n"
+         echo -e ".............httprobe successfully installed..............\n"
          else
          echo -e "...........httprobe is already installed...............\n"
    fi  
@@ -241,7 +241,7 @@ sleep 1
 echo -e ${CNC}"[+]Downloading LFI payloads\n"   
 if [[ ! -f ~/tools/dotdotpwn.txt ]]; then
          cd ~/tools
-wget https://raw.githubusercontent.com/swisskyrepo/PayloadsAllTheThings/master/Directory%20Traversal/Intruder/dotdotpwn.txt >dev/null 2>&1
+wget https://raw.githubusercontent.com/swisskyrepo/PayloadsAllTheThings/master/Directory%20Traversal/Intruder/dotdotpwn.txt 
         cat dotdotpwn.txt | head -n 120 > ~/tools/lfipayloads.txt
         echo -e "..............LFI Payloads Successfully Downloaded..........\n"
         else
@@ -301,7 +301,7 @@ echo -e ${BLUE}"[+]Installing kxss\n"
 command -v "kxss" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
     echo "........installing kxss............"
-    go get -u github.com/tomnomnom/hacks/kxss
+    go get -u github.com/tomnomnom/hacks/kxss >dev/null 2>&1
     echo -e "........kxss installed successfully...........\n"
     else
     echo -e ".........kxss already exists.................\n"
@@ -331,7 +331,7 @@ echo -e ${CP}"[+]Installing subjack\n"
 sleep 1
 command -v "subjack" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then         
-          go get github.com/haccer/subjack
+          go get github.com/haccer/subjack >/dev/null 2>&1
           cd ~/go/pkg/mod/github.com/haccer/
           sudo mv subjack@* subjack
           cd ~/go/
