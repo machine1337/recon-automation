@@ -301,7 +301,7 @@ echo -e ${BLUE}"[+]Installing kxss\n"
 command -v "kxss" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
     echo "........installing kxss............"
-    go get -u github.com/tomnomnom/hacks/kxss >dev/null 2>&1
+    go get -u github.com/tomnomnom/hacks/kxss >/dev/null 2>&1
     echo -e "........kxss installed successfully...........\n"
     else
     echo -e ".........kxss already exists.................\n"
