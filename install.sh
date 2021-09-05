@@ -101,8 +101,8 @@ amass_checking(){
 command -v "amass" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
          
-         sudo apt-get install update
-         sudo apt-get install amass
+         
+         sudo apt-get install amass -y
          echo -e "................Amass successfully installed..............\n"
          else
          echo -e "...............Amass is already installed.................\n"
@@ -115,8 +115,8 @@ jq_checking(){
 command -v "jq" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
          
-         sudo apt-get install update
-         sudo apt-get install jq
+         
+         sudo apt-get install jq -y
          echo -e ".................jq successfully installed..............\n"
          else
          echo -e ".............jq is already installed.....................\n"
@@ -184,8 +184,8 @@ if [[ $? -ne 0 ]]; then
         cd ~/tools
        git clone  https://github.com/vortexau/dnsvalidator.git
        cd dnsvalidator
-       sudo apt-get install python3-pip
-       sudo python3 setup.py install
+       sudo apt-get install python3-pip -y
+       sudo python3 setup.py install -y
        dnsvalidator -tL https://public-dns.info/nameservers.txt -threads 25 -o resolvers.txt
        cat resolvers.txt | tail -n 60 > ~/tools/resolvers/resolver.txt
        else
@@ -231,8 +231,8 @@ sleep 1
 echo -e ${GREEN}"[+]Installing Seclists\n"
 command -v "seclists" >/dev/null 2>&1
 if [[ ! -d /usr/share/seclists ]]; then 
-        sudo apt update
-        sudo apt install seclists >/dev/null 2>&1
+        
+        sudo apt install seclists -y
         echo -e "....................Seclists Successfully Installed.................\n"    
         else
         echo -e ".................Seclists Already Exists.................\n"
@@ -254,7 +254,7 @@ if [[ ! -d ~/tools/Corsy ]]; then
         cd ~/tools
         git clone  https://github.com/s0md3v/Corsy.git
         cd Corsy
-        sudo apt install python3-pip
+        sudo apt install python3-pip -y
         pip install -r requirements.txt
         echo -e "....................Cors installation done...................\n"
         else
@@ -371,7 +371,7 @@ if [[ ! -d ~/tools/Arjun ]]; then
        cd ~/tools
       git clone https://github.com/s0md3v/Arjun.git
        cd Arjun
-       sudo python3 setup.py install
+       sudo python3 setup.py install -y
        echo -e "............Arjun Successfully Installed................\n"
        else
        echo -e "............Arjun already installed.....................\n"
