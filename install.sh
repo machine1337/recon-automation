@@ -185,7 +185,7 @@ if [[ $? -ne 0 ]]; then
        git clone  https://github.com/vortexau/dnsvalidator.git
        cd dnsvalidator
        sudo apt-get install python3-pip -y
-       sudo python3 setup.py install -y
+       sudo python3 setup.py install 
        dnsvalidator -tL https://public-dns.info/nameservers.txt -threads 25 -o resolvers.txt
        cat resolvers.txt | tail -n 60 > ~/tools/resolvers/resolver.txt
        else
