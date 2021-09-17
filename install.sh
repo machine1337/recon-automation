@@ -76,8 +76,8 @@ checking_gf(){
 command -v "gf" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
          go get -u github.com/tomnomnom/gf >/dev/null 2>&1
-         echo 'source $GOPATH/src/github.com/tomnomnom/gf/gf-completion.zsh' >> ~/.zshrc
-         cp -r $GOPATH/src/github.com/tomnomnom/gf/examples ~/.gf
+         echo 'source $GOPATH/pkg/mod/github.com/tomnomnom/gf*/gf-completion.zsh' >> ~/.zshrc
+         cp -r $GOPATH/pkg/mod/github.com/tomnomnom/gf*/examples ~/.gf
          source ~/.zshrc
          echo -e "..............Gf tool Successfully installed..............\n"
          else
@@ -334,7 +334,11 @@ command -v "subjack" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then         
           go get github.com/haccer/subjack >/dev/null 2>&1
           cd ~/go/src/github.com/haccer/
-          
+          sudo mv subjack@* subjack
+          cd ~/go/
+          mkdir src
+          mkdir -p src/github.com
+          sudo mv ~/go/pkg/mod/github.com/haccer ~/go/src/github.com/
           
          echo -e ".........Subjack takeover tool installation done.........\n"
           else
