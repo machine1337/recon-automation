@@ -76,8 +76,8 @@ checking_gf(){
 command -v "gf" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
          go get -u github.com/tomnomnom/gf >/dev/null 2>&1
-         echo 'source $GOPATH/src/github.com/tomnomnom/gf*/gf-completion.zsh' >> ~/.zshrc
-         cp -r $GOPATH/src/github.com/tomnomnom/gf*/examples ~/.gf
+         echo 'source $GOPATH/src/github.com/tomnomnom/gf/gf-completion.zsh' >> ~/.zshrc
+         cp -r $GOPATH/src/github.com/tomnomnom/gf/examples ~/.gf
          source ~/.zshrc
          echo -e "..............Gf tool Successfully installed..............\n"
          else
