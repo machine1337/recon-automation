@@ -193,6 +193,7 @@ if [[ $? -ne 0 ]]; then
 fi
 
 }
+
 dnsvalidator_installing
 sleep 1
 other_tools(){
