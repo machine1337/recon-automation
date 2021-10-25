@@ -333,12 +333,12 @@ sleep 1
 command -v "subjack" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then         
           go get github.com/haccer/subjack >/dev/null 2>&1
-          cd ~/go/pkg/mod/github.com/haccer/
+          cd ~/go/src/mod/github.com/haccer/
           sudo mv subjack@* subjack
           cd ~/go/
-          mkdir src
+          mkdir -p src
           mkdir -p src/github.com
-          sudo mv ~/go/pkg/mod/github.com/haccer ~/go/src/github.com/
+          sudo mv ~/go/src/github.com/haccer ~/go/src/github.com/
           
          echo -e ".........Subjack takeover tool installation done.........\n"
           else
