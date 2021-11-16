@@ -76,8 +76,8 @@ checking_gf(){
 command -v "gf" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
          go get -u github.com/tomnomnom/gf >/dev/null 2>&1
-         echo 'source $GOPATH/src/github.com/tomnomnom/gf*/gf-completion.zsh' >> ~/.zshrc
-         cp -r $GOPATH/src/github.com/tomnomnom/gf*/examples ~/.gf
+         echo 'source $GOPATH/pkg/mod/github.com/tomnomnom/gf*/gf-completion.zsh' >> ~/.zshrc
+         cp -r $GOPATH/pkg/mod/github.com/tomnomnom/gf*/examples ~/.gf
          source ~/.zshrc
          echo -e "..............Gf tool Successfully installed..............\n"
          else
@@ -130,7 +130,7 @@ subfinder_checking(){
 command -v "subfinder" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
          
-         GO111MODULE=on go get -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder >/dev/null 2>&1
+         GO111MODULE=on go get -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder 
          echo -e "................subfinder successfully installed.............\n"
          else
          echo -e "............subfinder is already installed...................\n"
@@ -159,7 +159,7 @@ sleep 1
 echo -e ${CP}"[+]Installing Nuclei\n"
 command -v "nuclei" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
-         GO111MODULE=on go get -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei >/dev/null 2>&1  
+         GO111MODULE=on go get -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei   
          echo -e "...........Nuclei tool successfully installed...................\n"   
           else
           echo -e "...........Nuclei tool already exists...................\n"
@@ -200,7 +200,7 @@ other_tools(){
 echo -e ${CPO}"[+]Installing httpx\n"
 command -v "httpx" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then       
-        go get -v github.com/projectdiscovery/httpx/cmd/httpx >/dev/null 2>&1
+        go get -v github.com/projectdiscovery/httpx/cmd/httpx
         echo -e ".................httpx successfully installed..............\n"
          else
          echo -e "...............httpx is already installed.............\n"
@@ -209,7 +209,7 @@ sleep 1
 echo -e ${CP}"[+]Installing httprobe\n"
 command -v "httprobe" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then        
-         go get -u github.com/tomnomnom/httprobe >/dev/null 2>&1
+         go get -u github.com/tomnomnom/httprobe 
          echo -e ".............httprobe successfully installed..............\n"
          else
          echo -e "...........httprobe is already installed...............\n"
@@ -302,7 +302,7 @@ echo -e ${BLUE}"[+]Installing kxss\n"
 command -v "kxss" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
     echo "........installing kxss............"
-    go get -u github.com/tomnomnom/hacks/kxss >/dev/null 2>&1
+    go get -u github.com/tomnomnom/hacks/kxss 
     echo -e "........kxss installed successfully...........\n"
     else
     echo -e ".........kxss already exists.................\n"
@@ -333,12 +333,12 @@ sleep 1
 command -v "subjack" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then         
           go get github.com/haccer/subjack >/dev/null 2>&1
-          cd ~/go/src/mod/github.com/haccer/
+          cd ~/go/pkg/mod/github.com/haccer/
           sudo mv subjack@* subjack
           cd ~/go/
           mkdir -p src
           mkdir -p src/github.com
-          sudo mv ~/go/src/github.com/haccer ~/go/src/github.com/
+          sudo mv ~/go/pkg/mod/github.com/haccer ~/go/src/github.com/
           
          echo -e ".........Subjack takeover tool installation done.........\n"
           else
