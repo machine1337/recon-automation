@@ -143,6 +143,7 @@ massdns_checking(){
 mkdir -p ~/tools
 command -v "massdns" >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
+        mkdir -p ~/tools
          cd ~/tools
          git clone https://github.com/blechschmidt/massdns.git
          cd massdns
